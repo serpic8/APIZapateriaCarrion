@@ -78,7 +78,7 @@ namespace ZapateriaAPI.Controllers
             }
             catch (Exception ex)
             {
-                // Manejar cualquier excepción y devolver una respuesta apropiada
+               
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error al agregar el producto: " + ex.Message);
             }
         }
@@ -165,20 +165,17 @@ namespace ZapateriaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> UpdateProduct(int id, [FromBody] ProductsUpdateDto productDto)
         {
-            // Verificar si el ID es válido
             if (id <= 0)
             {
                 return BadRequest();
             }
 
-            // Buscar el producto en la base de datos
             var product = await _productsRepo.GetById(id);
             if (product == null)
             {
                 return NotFound();
             }
 
-            // Actualizar los datos del producto con los valores proporcionados
             product.productMarca = productDto.productMarca;
             product.productModelo = productDto.productModelo;
             product.productTipo = productDto.productTipo;
@@ -193,81 +190,10 @@ namespace ZapateriaAPI.Controllers
             return Ok();
         }
 
-        //[HttpPost("Products", Name = "AddProduct")]
-        //[ProducesResponseType(StatusCodes.Status201Created)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //public async Task<ActionResult<ProductsDto>> AddProduct([FromBody] ProductsCreateDto productCreateDto)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    var product = new Products
-        //    {
-        //        productMarca = productCreateDto.productMarca,
-        //        productModelo = productCreateDto.productModelo,
-        //        productTipo = productCreateDto.productTipo,
-        //        productColor = productCreateDto.productColor,
-        //        productTalla = productCreateDto.productTalla,
-        //        productGenero = productCreateDto.productGenero,
-        //        productPrecio = productCreateDto.productPrecio,
-        //        productUbicacion = productCreateDto.productUbicacion
-        //    };
-
-        //    await _productsRepo.AddProduct(product);
-
-        //    var productDto = new ProductsDto
-        //    {
-        //        productId = product.productId,
-        //        productMarca = product.productMarca,
-        //        productModelo = product.productModelo,
-        //        productTipo = product.productTipo,
-        //        productColor = product.productColor,
-        //        productTalla = product.productTalla,
-        //        productGenero = product.productGenero,
-        //        productPrecio = product.productPrecio,
-        //        productUbicacion = product.productUbicacion
-        //    };
-
-        //    return CreatedAtRoute("GetProducts", new { marca = product.productMarca }, productDto);
-        //}
 
 
 
 
-
-
-
-
-        //[HttpPost("Products", Name = "AddProducts")]
-        //[ProducesResponseType(StatusCodes.Status201Created)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<ActionResult<ProductsDto>> AddProduct([FromBody] ProductsCreateDto productCreateDto)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    if (await _productsRepo.Get(p => p.productMarca == productCreateDto.productMarca && p.productModelo == productCreateDto.productModelo) != null)
-        //    {
-        //        ModelState.AddModelError("ProductoExiste", "¡El producto ya existe en la base de datos!");
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    if (productCreateDto == null)
-        //    {
-        //        return BadRequest(productCreateDto);
-        //    }
-
-        //    Products model = _mapper.Map<Products>(productCreateDto);
-
-        //    await _productsRepo.Add(model);
-
-        //    return CreatedAtRoute("GetProduct", new { id = model.productId }, model);
-        //}
 
     }
 
